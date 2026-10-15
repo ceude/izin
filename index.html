@@ -110,8 +110,17 @@
     display: grid; place-items: center; color: #fff; flex: none;
   }
   h1 { margin: 0; font-size: 26px; letter-spacing: -.01em; color: var(--navy); }
-  .back { font-size: 13px; color: var(--muted); text-decoration: none; }
-  .back:hover { color: var(--navy); }
+  .tip {
+    position: fixed; z-index: 70; pointer-events: none; opacity: 0; transform: translate(-50%, calc(-100% - 4px));
+    background: var(--navy); color: #fff; font-size: 12px; line-height: 1.3; padding: 6px 9px; border-radius: 8px;
+    white-space: nowrap; box-shadow: 0 6px 18px -6px rgba(0,0,0,.45); transition: opacity .12s, transform .12s;
+  }
+  .tip.show { opacity: 1; transform: translate(-50%, calc(-100% - 8px)); }
+  .tip small { display: block; opacity: .7; font-size: 11px; }
+  .tip::after {
+    content: ""; position: absolute; left: 50%; bottom: -5px; margin-left: -5px;
+    border: 5px solid transparent; border-bottom: 0; border-top-color: var(--navy);
+  }
 
   /* ---------- Settings bar ---------- */
   .settings {
@@ -172,6 +181,54 @@
   .legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 13px; color: var(--muted); margin: 6px 0 12px; align-items: center; }
   .legend .sw { display: inline-block; width: 14px; height: 14px; border-radius: 4px; vertical-align: -2px; margin-right: 6px; }
   .hint { font-size: 13px; color: var(--muted); margin: 0 0 14px; }
+  .legend-actions { margin-left: auto; display: flex; gap: 8px; }
+  .btn-sm {
+    font: inherit; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 12px; border-radius: 9px; cursor: pointer; border: 1px solid var(--navy); background: #fff; color: var(--navy);
+  }
+  .btn-sm:hover { background: var(--navy-soft); }
+  .btn-sm.excel { background: #1d6f42; border-color: #1d6f42; color: #fff; }
+  .btn-sm.excel:hover { background: #185c37; }
+  .btn-sm:disabled { opacity: .6; cursor: wait; }
+  .fields { display: grid; gap: 10px; margin-bottom: 6px; }
+  .fields label { font-size: 13px; color: var(--muted); display: grid; gap: 4px; }
+  .fields input { font: inherit; font-size: 15px; padding: 9px 11px; border: 1px solid var(--line); border-radius: 9px; color: var(--text); }
+  .fields input:focus { outline: 2px solid var(--navy-2); outline-offset: 0; border-color: transparent; }
+
+  /* ---------- Print document (HR) ---------- */
+  #printDoc { display: none; }
+  @media print {
+    @page { size: A4 portrait; margin: 12mm; }
+    body { background: #fff; }
+    body > *:not(#printDoc) { display: none !important; }
+    #printDoc { display: block; }
+  }
+  #printDoc { color: #111; font-size: 10.5pt; line-height: 1.35; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  #printDoc .ph { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2.5px solid var(--navy); padding-bottom: 6px; margin-bottom: 10px; }
+  #printDoc .ph h1 { font-size: 17pt; margin: 0; color: var(--navy); letter-spacing: .02em; }
+  #printDoc .ph .meta { text-align: right; font-size: 9pt; color: #444; }
+  #printDoc h2 { font-size: 10.5pt; margin: 12px 0 5px; color: var(--navy); text-transform: uppercase; letter-spacing: .05em; }
+  #printDoc table { width: 100%; border-collapse: collapse; }
+  #printDoc th, #printDoc td { border: 1px solid #9aa3b5; padding: 4px 6px; text-align: left; }
+  #printDoc th { background: #e8eef8; font-weight: 600; font-size: 9pt; }
+  #printDoc .c { text-align: center; }
+  #printDoc .tot td { font-weight: 700; background: #f3f6fb; }
+  #printDoc .who td { width: 33.3%; height: 30px; vertical-align: top; }
+  #printDoc .who small { display: block; font-size: 8pt; color: #555; }
+  #printDoc .cal { table-layout: fixed; font-size: 7.5pt; }
+  #printDoc .cal th, #printDoc .cal td { padding: 2px 0; text-align: center; border-color: #c3c9d6; }
+  #printDoc .cal th:first-child, #printDoc .cal td:first-child { width: 52px; text-align: left; padding-left: 4px; font-weight: 600; }
+  #printDoc .cal .we { background: #eceff4; color: #888; }
+  #printDoc .cal .lv { background: var(--navy); color: #fff; font-weight: 700; }
+  #printDoc .cal .sc { background: #7f9bd1; color: #fff; font-weight: 700; }
+  #printDoc .cal .rt { background: #f6c9d0; color: #a30d25; font-weight: 700; }
+  #printDoc .cal .na { background: #fff; border-color: #fff; }
+  #printDoc .plegend { display: flex; gap: 14px; font-size: 8.5pt; margin-top: 5px; flex-wrap: wrap; }
+  #printDoc .plegend i { display: inline-block; width: 10px; height: 10px; vertical-align: -1px; margin-right: 4px; border: 1px solid #c3c9d6; }
+  #printDoc .notes { font-size: 8.5pt; color: #444; margin: 8px 0 0; padding-left: 16px; }
+  #printDoc .sign { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 26px; }
+  #printDoc .sign div { border-top: 1px solid #333; padding-top: 4px; font-size: 9pt; }
+  #printDoc .sign small { display: block; color: #555; font-size: 8pt; }
 
   /* ---------- Calendar ---------- */
   .months { display: grid; grid-template-columns: repeat(auto-fill, minmax(232px, 1fr)); gap: 14px; user-select: none; -webkit-user-select: none; }
@@ -234,6 +291,8 @@
     border: 0; background: var(--navy); color: #fff;
   }
   .btn-auto:hover { background: var(--navy-2); }
+  .btn-auto.alt { background: #fff; color: var(--navy); box-shadow: inset 0 0 0 1.5px var(--navy); margin-top: 10px; }
+  .btn-auto.alt:hover { background: var(--navy-soft); }
 
   .toast {
     position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px); opacity: 0; pointer-events: none;
@@ -292,8 +351,7 @@
 
   <main>
     <header class="page-head">
-      <a class="back" href="https://ceude.github.io/">← ceude · projeler</a>
-      <div class="brand" style="margin-top:6px">
+      <div class="brand">
         <div class="logo" aria-hidden="true">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 15l2 2 4-4"/></svg>
         </div>
@@ -311,6 +369,11 @@
         <label class="switch"><input type="checkbox" id="twoWeeks" checked><span></span></label>
         <label for="twoWeeks">2 haftalık izin kullanımı zorunlu mu?
           <small>6 + 6 = 12 gün düşer (arada resmi tatil yoksa)</small></label>
+      </div>
+      <div class="setting">
+        <label class="switch"><input type="checkbox" id="oneLong" checked><span></span></label>
+        <label for="oneLong">Yılda sadece bir 2 haftalık izne mi izin veriliyor?
+          <small>1 haftadan uzun izin yılda yalnızca bir kez</small></label>
       </div>
       <div class="setting">
         <label for="allowance">Yıllık izin hakkı</label>
@@ -340,6 +403,14 @@
       <span><i class="sw" style="background:repeating-linear-gradient(135deg,var(--sat-charge) 0 4px,#6d8ccc 4px 8px)"></i>İzinden düşen Cumartesi</span>
       <span><i class="sw" style="background:var(--holiday-soft);box-shadow:inset 0 0 0 1px var(--holiday)"></i>Resmi tatil (Niedersachsen)</span>
       <span><i class="sw" style="background:#f3f6fb;box-shadow:inset 0 0 0 1px var(--line)"></i>İş günü</span>
+      <span class="legend-actions">
+        <button class="btn-sm" id="btnPrint" type="button">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Print</button>
+        <button class="btn-sm excel" id="btnExcel" type="button">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+          Excel İndir</button>
+      </span>
     </div>
     <p class="hint">Bir güne tıklayarak izin ekle / kaldır. Basılı tutup sürükleyerek birden fazla gün seçebilirsin. Resmi tatiller ve hafta sonları seçilemez, tek seferde 2 haftadan uzun izin alınamaz.</p>
 
@@ -354,6 +425,7 @@
           <li>Cumartesi normal günse, Cuma izni <b>2 gün</b> düşer (Cuma + Cumartesi).</li>
           <li>Perşembe–Cuma tatil, Çarşamba izinliysen yine <b>2 gün</b> düşer: işe dönüş Pazartesi seçildiği için Cumartesi de sayılır.</li>
           <li>Tek bir izin en fazla <b>2 hafta</b> sürebilir (izin başlangıcından işe dönüşe 14 gün).</li>
+          <li>Ayar açıksa 1 haftadan uzun izin yılda yalnızca <b>bir kez</b> alınabilir.</li>
           <li>Optimizasyon, izinden düşen gün başına en uzun kesintisiz tatili verecek şekilde köprü günleri seçer.</li>
         </ul>
       </div>
@@ -385,14 +457,38 @@
 
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
   <div class="dialog">
-    <button class="x" id="mClose" aria-label="Kapat">×</button>
+    <button class="x" data-close aria-label="Kapat">×</button>
     <h2 id="mTitle">2 haftalık izni hangi ayda planlıyorsun?</h2>
     <p>Seçtiğin ayda en az izin düşen 2 haftayı bulur, kalan günleri köprü günlerine dağıtırım.</p>
     <div class="month-btns" id="mMonths"></div>
     <button class="btn-auto" id="mAuto">2 haftalık izni de sen seç</button>
   </div>
 </div>
+<div class="modal" id="choiceModal" role="dialog" aria-modal="true" aria-labelledby="cTitle">
+  <div class="dialog">
+    <button class="x" data-close aria-label="Kapat">×</button>
+    <h2 id="cTitle">Takvimdeki seçimlerinizi koruyarak mı devam edeyim yoksa sıfırdan mı başlansın?</h2>
+    <p>Korursan seçtiğin günler planda kalır, kalan izin hakkını onların etrafına dağıtırım.</p>
+    <button class="btn-auto" id="cKeep">Takvimdeki izin seçimlerimi koru ve gerisini yap</button>
+    <button class="btn-auto alt" id="cFresh">Takvimdeki seçimlerimi gözardı et ve sıfırdan yap</button>
+  </div>
+</div>
+<div class="modal" id="docModal" role="dialog" aria-modal="true" aria-labelledby="dTitle">
+  <div class="dialog">
+    <button class="x" data-close aria-label="Kapat">×</button>
+    <h2 id="dTitle">Belge bilgileri</h2>
+    <p>İsteğe bağlı. Boş bırakırsan belgede doldurulacak alan olarak kalır. Bilgiler sadece bu tarayıcıda saklanır.</p>
+    <div class="fields">
+      <label>Ad Soyad<input id="fName" autocomplete="name"></label>
+      <label>Departman<input id="fDept" autocomplete="organization-title"></label>
+      <label>Personel No<input id="fNo" autocomplete="off"></label>
+    </div>
+    <button class="btn-auto" id="dGo">Devam</button>
+  </div>
+</div>
+<div id="printDoc"></div>
 <div class="toast" id="toast"></div>
+<div class="tip" id="tip" role="tooltip"></div>
 
 <script>
 (function () {
@@ -400,6 +496,7 @@
   const DOW = ["Pzt","Sal","Çar","Per","Cum","Cmt","Paz"];
   const DOW_LONG = ["Pazar","Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi"];
   const MAX_SPAN = 14;     // izin başlangıcından işe dönüşe en fazla 14 gün
+  const WEEK_SPAN = 7;     // bundan uzun izin "2 haftalık izin" sayılır
   const DAY = 86400000;
 
   // ---------- storage (best effort) ----------
@@ -450,6 +547,7 @@
   const els = {
     satRule: document.getElementById("satRule"),
     twoWeeks: document.getElementById("twoWeeks"),
+    oneLong: document.getElementById("oneLong"),
     allowance: document.getElementById("allowance"),
     year: document.getElementById("year"),
     months: document.getElementById("months")
@@ -462,6 +560,7 @@
   els.year.value = year;
   els.satRule.checked = store.get("izin.satRule", true);
   els.twoWeeks.checked = store.get("izin.twoWeeks", true);
+  els.oneLong.checked = store.get("izin.oneLong", true);
   els.allowance.value = store.get("izin.allowance", 24);
 
   let hol, holAll, leave;
@@ -528,7 +627,7 @@
         const c = document.createElement("div");
         const k = key(d), w = d.getDay();
         c.className = "d"; c.textContent = d.getDate(); c.dataset.k = k;
-        if (hol.has(k)) { c.classList.add("hol"); c.title = hol.get(k).tr + " · " + hol.get(k).de; }
+        if (hol.has(k)) c.classList.add("hol");
         else if (w === 0) c.classList.add("sun");
         else if (w === 6) c.classList.add("sat");
         else c.classList.add("work");
@@ -571,7 +670,20 @@
 
     const blocks = computeBlocks(leave, sats);
     const hasTwoWeeks = blocks.some(b => b.span === MAX_SPAN);
-    document.getElementById("twoWeekNote").classList.toggle("show", els.twoWeeks.checked && !hasTwoWeeks);
+    const longCount = blocks.filter(b => b.span > WEEK_SPAN).length;
+    const note = document.getElementById("twoWeekNote");
+    const msgs = [];
+    if (els.twoWeeks.checked && !hasTwoWeeks) msgs.push("Zorunlu 2 haftalık izin henüz planlanmadı.");
+    if (els.oneLong.checked && longCount > 1) msgs.push("Yılda sadece bir 2 haftalık izin alınabilir; şu an " + longCount + " tane var.");
+    note.textContent = msgs.join(" ");
+    note.classList.toggle("show", msgs.length > 0);
+
+    // seçimle birlikte canlı güncellenen özet cümlesi
+    let off = 0;
+    blocks.forEach(b => { let p = b.start; while (isFree(addDays(p, -1))) p = addDays(p, -1); off += diffDays(p, b.ret); });
+    setResult(blocks.length
+      ? "✨ <b>" + used + " gün</b> izinle toplam <b>" + off + " gün</b> tatil, " + blocks.length + " ayrı izin."
+      : "");
     renderBlocks(blocks);
   }
 
@@ -625,7 +737,6 @@
     hol = holidays(year);
     holAll = new Map([...holidays(year - 1), ...hol, ...holidays(year + 1)]);
     leave = new Set(store.get("izin.days." + year, []).filter(k => isWorkday(parseKey(k))));
-    setResult("");
     renderCalendar(); renderHolidays(); refresh();
   }
 
@@ -641,24 +752,31 @@
   }
 
   // ---------- interaction: click / drag to select ----------
-  const tooLong = set => computeBlocks(set, chargedSaturdays(set)).some(b => b.span > MAX_SPAN);
+  function violation(set) {
+    const blocks = computeBlocks(set, chargedSaturdays(set));
+    if (blocks.some(b => b.span > MAX_SPAN)) return "2 haftadan uzun izin alınamaz.";
+    if (els.oneLong.checked && blocks.filter(b => b.span > WEEK_SPAN).length > 1) return "Yılda sadece bir 2 haftalık izin alınabilir.";
+    return "";
+  }
   let dragMode = null; // "add" | "remove"
   function apply(cell) {
     if (!cell || !cell.classList.contains("work")) return;
     const k = cell.dataset.k;
     if (dragMode === "add") {
       if (leave.has(k)) return;
+      // only adding a day can break the rules; reject it if it does
+      const before = violation(leave);
       leave.add(k);
-      if (tooLong(leave)) {
+      const msg = violation(leave);
+      if (msg && msg !== before) {
         leave.delete(k);
         cell.classList.remove("flash"); void cell.offsetWidth; cell.classList.add("flash");
-        toast("2 haftadan uzun izin alınamaz.");
+        toast(msg);
         return;
       }
     } else {
       leave.delete(k);
     }
-    setResult("");
     refresh();
   }
   els.months.addEventListener("pointerdown", e => {
@@ -680,15 +798,40 @@
   document.addEventListener("pointercancel", endDrag);
   els.months.style.touchAction = "pan-y";
 
+  // ---------- holiday tooltip (hover; tap on touch) ----------
+  const tip = document.getElementById("tip");
+  function showTip(cell) {
+    const h = hol.get(cell.dataset.k);
+    tip.innerHTML = "<b></b><small></small>";
+    tip.querySelector("b").textContent = h.tr;
+    tip.querySelector("small").textContent = h.de + " · " + DOW_LONG[h.date.getDay()] + " " + fmt(h.date);
+    const r = cell.getBoundingClientRect();
+    const half = tip.offsetWidth / 2 + 8;
+    tip.style.left = Math.min(Math.max(r.left + r.width / 2, half), window.innerWidth - half) + "px";
+    tip.style.top = r.top + "px";
+    tip.classList.add("show");
+  }
+  const hideTip = () => tip.classList.remove("show");
+  els.months.addEventListener("pointerover", e => {
+    const cell = e.target.closest(".d.hol");
+    if (cell) showTip(cell); else hideTip();
+  });
+  els.months.addEventListener("pointerleave", hideTip);
+  els.months.addEventListener("click", e => { const cell = e.target.closest(".d.hol"); if (cell) showTip(cell); });
+  window.addEventListener("scroll", hideTip, { passive: true });
+
   // ---------- optimizer ----------
   // Candidate block = every workday from W[i] to W[j] taken as leave. Its holiday period starts at the
   // free days before W[i] and ends the day before return (first workday after W[j]).
   // value = holiday length - 2, so long bridges around public holidays beat scattered single days.
   // Weighted interval DP over workdays with a budget dimension and a "2-week block taken" flag.
-  function optimize(budget, mandMode) { // mandMode: null = no mandatory block, "any", or month 0-11
+  // Days in `fixed` must stay leave: they can't be skipped and can't be the return day of a block.
+  function optimize(budget, mandMode, fixed) { // mandMode: null = no mandatory block, "any", or month 0-11
+    fixed = fixed || new Set();
     const W = [];
     for (let d = new Date(year, 0, 1); d.getFullYear() === year; d = addDays(d, 1)) if (isWorkday(d)) W.push(d);
     const n = W.length, satRule = els.satRule.checked;
+    const isFixed = W.map(d => fixed.has(key(d)));
     const cands = Array.from({ length: n }, () => []);
     for (let i = 0; i < n; i++) {
       let pStart = W[i]; while (isFree(addDays(pStart, -1))) pStart = addDays(pStart, -1);
@@ -702,34 +845,40 @@
         if (cost > budget) break;
         const len = diffDays(pStart, r);
         const mand = mandMode !== null && span === MAX_SPAN && (mandMode === "any" || W[i].getMonth() === mandMode);
-        cands[i].push({ i, j, cost, len, val: len - 2, mand });
+        cands[i].push({ i, j, cost, len, span, val: len - 2, mand });
       }
     }
-    const needF = mandMode === null ? 0 : 1;
-    const B = budget, S = (B + 1) * 2;
-    const idx = (p, b, f) => p * S + b * 2 + f;
+    // state flags: bit 0 = mandatory 2-week block taken, bit 1 = a block longer than a week taken
+    const needF = mandMode === null ? 0 : 1, oneLong = els.oneLong.checked;
+    const B = budget, S = (B + 1) * 4;
+    const idx = (p, b, f) => p * S + b * 4 + f;
     const val = new Float64Array((n + 1) * S).fill(-Infinity);
     const prev = new Int32Array((n + 1) * S).fill(-1);
     const via = new Array((n + 1) * S);
     val[idx(0, 0, 0)] = 0;
     const relax = (to, v, from, c) => { if (v > val[to]) { val[to] = v; prev[to] = from; via[to] = c; } };
     for (let p = 0; p < n; p++) {
-      for (let b = 0; b <= B; b++) for (let f = 0; f < 2; f++) {
+      for (let b = 0; b <= B; b++) for (let f = 0; f < 4; f++) {
         const cur = idx(p, b, f), v = val[cur];
         if (v === -Infinity) continue;
-        relax(idx(p + 1, b, f), v, cur, null);
+        if (!isFixed[p]) relax(idx(p + 1, b, f), v, cur, null);
         for (const c of cands[p]) {
           const nb = b + c.cost; if (nb > B) break;
+          if (c.j + 1 < n && isFixed[c.j + 1]) continue;
+          const long = oneLong && c.span > WEEK_SPAN;
+          if (long && (f & 2)) continue;
           const np = Math.min(n, c.j + 2); // en az bir iş günü arayla
-          relax(idx(np, nb, f), v + c.val, cur, c);
-          if (c.mand && f === 0) relax(idx(np, nb, 1), v + c.val + 1e-6, cur, c);
+          const nf = f | (long ? 2 : 0);
+          relax(idx(np, nb, nf), v + c.val, cur, c);
+          if (c.mand && !(f & 1)) relax(idx(np, nb, nf | 1), v + c.val, cur, c);
         }
       }
     }
     // en yüksek değer; eşitlikte daha çok gün kullanan
     let best = -1, bestV = -Infinity;
-    for (let b = 0; b <= B; b++) {
-      const k = idx(n, b, needF), v = val[k] + b * 1e-3;
+    for (let b = 0; b <= B; b++) for (let f = 0; f < 4; f++) {
+      if ((f & 1) !== needF) continue;
+      const k = idx(n, b, f), v = val[k] + b * 1e-3;
       if (val[k] > -Infinity && v > bestV) { bestV = v; best = k; }
     }
     if (best < 0) return null;
@@ -740,22 +889,18 @@
     return set;
   }
 
+  let pendingFixed = new Set();
   function runOptimize(mandMode) {
     const budget = Math.floor(parseFloat(els.allowance.value) || 0);
-    const res = optimize(budget, mandMode);
+    const res = optimize(budget, mandMode, pendingFixed);
     closeModal();
     if (!res) {
-      toast(mandMode === null ? "Bu izin hakkıyla plan yapılamadı." : "Bu ayda 2 haftalık izin için yeterli izin hakkı yok.");
+      toast(pendingFixed.size
+        ? "Takvimdeki seçimlerinle bu plan kurallara uymuyor; başka bir ay dene ya da sıfırdan başla."
+        : mandMode === null ? "Bu izin hakkıyla plan yapılamadı." : "Bu ayda 2 haftalık izin için yeterli izin hakkı yok.");
       return;
     }
     leave = res; save(); refresh();
-    const sats = chargedSaturdays(leave);
-    const blocks = computeBlocks(leave, sats);
-    let off = 0;
-    blocks.forEach(b => { let p = b.start; while (isFree(addDays(p, -1))) p = addDays(p, -1); off += diffDays(p, b.ret); });
-    const used = leave.size + sats.size;
-    setResult("✨ <b>" + used + " gün</b> izinle toplam <b>" + off + " gün</b> tatil, " + blocks.length + " ayrı izin." +
-      (budget - used > 0 ? " " + (budget - used) + " gün kaldı; istersen elle ekleyebilirsin." : ""));
     document.querySelector(".summary").scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
@@ -767,25 +912,291 @@
     b.addEventListener("click", () => runOptimize(i));
     mMonths.appendChild(b);
   });
-  function closeModal() { modal.classList.remove("show"); }
+  const choiceModal = document.getElementById("choiceModal");
+  const docModal = document.getElementById("docModal");
+  const modals = [modal, choiceModal, docModal];
+  function closeModal() { modals.forEach(m => m.classList.remove("show")); }
   document.getElementById("mAuto").addEventListener("click", () => runOptimize("any"));
-  document.getElementById("mClose").addEventListener("click", closeModal);
-  modal.addEventListener("click", e => { if (e.target === modal) closeModal(); });
+  document.querySelectorAll("[data-close]").forEach(b => b.addEventListener("click", closeModal));
+  modals.forEach(m => m.addEventListener("click", e => { if (e.target === m) closeModal(); }));
   document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
 
-  document.getElementById("optimize").addEventListener("click", () => {
-    if (leave.size && !confirm(year + " için mevcut izin seçimlerin silinip yeni plan hazırlansın mı?")) return;
-    if (els.twoWeeks.checked) modal.classList.add("show");
+  function startPlan(keep) {
+    closeModal();
+    pendingFixed = keep ? new Set(leave) : new Set();
+    // korunan seçimlerde zaten tam 2 haftalık bir izin varsa ay sormaya gerek yok
+    const hasTwoWeeks = keep && computeBlocks(leave, chargedSaturdays(leave)).some(b => b.span === MAX_SPAN);
+    if (els.twoWeeks.checked && !hasTwoWeeks) modal.classList.add("show");
     else runOptimize(null);
+  }
+  document.getElementById("cKeep").addEventListener("click", () => startPlan(true));
+  document.getElementById("cFresh").addEventListener("click", () => startPlan(false));
+
+  document.getElementById("optimize").addEventListener("click", () => {
+    if (leave.size) choiceModal.classList.add("show");
+    else startPlan(false);
   });
+
+  // ---------- export: plan data ----------
+  const fmtFull = d => pad(d.getDate()) + "." + pad(d.getMonth() + 1) + "." + d.getFullYear();
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+  function planData() {
+    const sats = chargedSaturdays(leave);
+    const blocks = computeBlocks(leave, sats).map(b => {
+      let p = b.start; while (isFree(addDays(p, -1))) p = addDays(p, -1);
+      return { ...b, weekdays: b.days - b.sats, off: diffDays(p, b.ret) };
+    });
+    const allow = parseFloat(els.allowance.value) || 0;
+    const used = leave.size + sats.size;
+    // per-day status for the calendar grid
+    const status = d => {
+      const k = key(d);
+      if (leave.has(k)) return "lv";
+      if (sats.has(k)) return "sc";
+      if (hol.has(k)) return "rt";
+      if (d.getDay() === 0 || d.getDay() === 6) return "we";
+      return "";
+    };
+    return {
+      year, allow, used, rem: allow - used, weekdays: leave.size, sats: sats.size, blocks, status,
+      off: blocks.reduce((s, b) => s + b.off, 0),
+      person: { name: els.fName.value.trim(), dept: els.fDept.value.trim(), no: els.fNo.value.trim() },
+      created: fmtFull(new Date())
+    };
+  }
+  const CODE = { lv: "İ", sc: "C", rt: "RT" };
+  const DOW1 = ["Pz", "Pt", "Sa", "Ça", "Pe", "Cu", "Ct"];
+
+  // ---------- print (HR document) ----------
+  function buildPrint() {
+    const P = planData();
+    const blank = v => v ? esc(v) : "&nbsp;";
+    let rows = P.blocks.map((b, i) =>
+      `<tr><td class="c">${i + 1}</td><td>${fmtFull(b.start)} ${DOW_LONG[b.start.getDay()]}</td><td>${fmtFull(b.end)} ${DOW_LONG[b.end.getDay()]}</td>` +
+      `<td>${fmtFull(b.ret)} ${DOW_LONG[b.ret.getDay()]}</td><td class="c">${b.weekdays}</td><td class="c">${b.sats}</td><td class="c"><b>${b.days}</b></td></tr>`).join("");
+    if (!rows) rows = '<tr><td colspan="7" style="text-align:center;color:#666">Planlanmış izin yok</td></tr>';
+    let cal = '<tr><th>Ay</th>' + Array.from({ length: 31 }, (_, i) => `<th>${i + 1}</th>`).join("") + "</tr>";
+    for (let m = 0; m < 12; m++) {
+      cal += `<tr><td>${MONTHS[m]}</td>`;
+      for (let day = 1; day <= 31; day++) {
+        const d = new Date(year, m, day);
+        if (d.getMonth() !== m) { cal += '<td class="na"></td>'; continue; }
+        const s = P.status(d);
+        cal += `<td class="${s}">${CODE[s] || DOW1[d.getDay()]}</td>`;
+      }
+      cal += "</tr>";
+    }
+    document.getElementById("printDoc").innerHTML = `
+      <div class="ph">
+        <h1>YILLIK İZİN PLANI ${P.year}</h1>
+        <div class="meta">Niedersachsen resmi tatillerine göre<br>Hazırlanma tarihi: ${P.created}</div>
+      </div>
+      <table class="who"><tr>
+        <td><small>Ad Soyad</small>${blank(P.person.name)}</td>
+        <td><small>Departman</small>${blank(P.person.dept)}</td>
+        <td><small>Personel No</small>${blank(P.person.no)}</td>
+      </tr></table>
+      <h2>Özet</h2>
+      <table><tr><th>Yıllık izin hakkı</th><th>Hafta içi izin</th><th>Düşen Cumartesi</th><th>Toplam kullanılan</th><th>Kalan</th></tr>
+        <tr><td class="c">${P.allow}</td><td class="c">${P.weekdays}</td><td class="c">${P.sats}</td><td class="c"><b>${P.used}</b></td><td class="c"><b>${P.rem}</b></td></tr></table>
+      <h2>İzin talepleri</h2>
+      <table><tr><th class="c">No</th><th>İzin başlangıcı</th><th>Son izin günü</th><th>İşe dönüş</th><th class="c">Hafta içi</th><th class="c">Cumartesi</th><th class="c">Düşen gün</th></tr>
+        ${rows}
+        <tr class="tot"><td colspan="4">Toplam</td><td class="c">${P.weekdays}</td><td class="c">${P.sats}</td><td class="c">${P.used}</td></tr></table>
+      <h2>Takvim ${P.year}</h2>
+      <table class="cal">${cal}</table>
+      <div class="plegend">
+        <span><i style="background:var(--navy)"></i>İ = İzin günü</span>
+        <span><i style="background:#7f9bd1"></i>C = İzinden düşen Cumartesi</span>
+        <span><i style="background:#f6c9d0"></i>RT = Resmi tatil</span>
+        <span><i style="background:#eceff4"></i>Hafta sonu</span>
+      </div>
+      <ul class="notes">
+        <li>Cumartesi kuralı: ${els.satRule.checked ? "uygulandı (işe dönüş Cumartesi seçilemediği için, son iş günü izinliyse Cumartesi de izinden düşer)" : "uygulanmadı"}.</li>
+        <li>Resmi tatiller: ${[...hol.values()].sort((a, b) => a.date - b.date).map(h => fmt(h.date) + " " + h.de).join(", ")}.</li>
+      </ul>
+      <div class="sign">
+        <div>Çalışan<small>Tarih / İmza</small></div>
+        <div>Birim Yöneticisi<small>Tarih / İmza</small></div>
+        <div>İnsan Kaynakları<small>Tarih / İmza</small></div>
+      </div>`;
+  }
+  window.addEventListener("beforeprint", buildPrint);
+
+  // ---------- Excel ----------
+  let excelLib;
+  function loadExcelJS() {
+    if (window.ExcelJS) return Promise.resolve(window.ExcelJS);
+    if (!excelLib) excelLib = new Promise((res, rej) => {
+      const s = document.createElement("script");
+      s.src = "https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js";
+      s.onload = () => res(window.ExcelJS);
+      s.onerror = () => { excelLib = null; rej(new Error("ExcelJS yüklenemedi")); };
+      document.head.appendChild(s);
+    });
+    return excelLib;
+  }
+
+  async function downloadExcel() {
+    const btn = document.getElementById("btnExcel");
+    btn.disabled = true;
+    try {
+      const ExcelJS = await loadExcelJS();
+      const P = planData();
+      const wb = new ExcelJS.Workbook();
+      wb.creator = "İzin planlayıcı - Niedersachsen";
+      const fill = argb => ({ type: "pattern", pattern: "solid", fgColor: { argb } });
+      const thin = { style: "thin", color: { argb: "FFB8C0D0" } };
+      const border = { top: thin, left: thin, bottom: thin, right: thin };
+      const NAVY = "FF00205B", HEAD = "FFE8EEF8";
+
+      // Sheet 1: summary + requests
+      const ws = wb.addWorksheet("İzin Planı", { pageSetup: { paperSize: 9, orientation: "portrait", fitToPage: true, fitToWidth: 1 } });
+      ws.columns = [{ width: 6 }, { width: 24 }, { width: 24 }, { width: 24 }, { width: 11 }, { width: 11 }, { width: 11 }];
+      ws.mergeCells("A1:G1");
+      ws.getCell("A1").value = "Yıllık İzin Planı " + P.year;
+      ws.getCell("A1").font = { bold: true, size: 16, color: { argb: NAVY } };
+      ws.getCell("A2").value = "Niedersachsen resmi tatillerine göre · Hazırlanma tarihi: " + P.created;
+      ws.getCell("A2").font = { size: 9, color: { argb: "FF666666" } };
+      [["Ad Soyad", P.person.name], ["Departman", P.person.dept], ["Personel No", P.person.no]].forEach(([k, v], i) => {
+        const r = 4 + i;
+        ws.mergeCells(`A${r}:B${r}`); ws.mergeCells(`C${r}:E${r}`);
+        ws.getCell(`A${r}`).value = k; ws.getCell(`A${r}`).font = { bold: true }; ws.getCell(`A${r}`).fill = fill(HEAD);
+        ws.getCell(`C${r}`).value = v || "";
+        ["A", "C"].forEach(c => { ws.getCell(`${c}${r}`).border = border; });
+      });
+
+      ws.getCell("A8").value = "Özet"; ws.getCell("A8").font = { bold: true, size: 12, color: { argb: NAVY } };
+      const sumHead = ws.getRow(9), sumVal = ws.getRow(10);
+      ["Yıllık izin hakkı", "Hafta içi izin", "Düşen Cumartesi", "Toplam kullanılan", "Kalan"].forEach((h, i) => {
+        const col = i + 2;
+        sumHead.getCell(col).value = h; sumHead.getCell(col).font = { bold: true }; sumHead.getCell(col).fill = fill(HEAD);
+        sumVal.getCell(col).value = [P.allow, P.weekdays, P.sats, P.used, P.rem][i];
+        [sumHead.getCell(col), sumVal.getCell(col)].forEach(c => { c.border = border; c.alignment = { horizontal: "center", wrapText: true }; });
+      });
+
+      ws.getCell("A12").value = "İzin talepleri"; ws.getCell("A12").font = { bold: true, size: 12, color: { argb: NAVY } };
+      const head = ws.getRow(13);
+      ["No", "İzin başlangıcı", "Son izin günü", "İşe dönüş", "Hafta içi", "Cumartesi", "Düşen gün"].forEach((h, i) => {
+        const c = head.getCell(i + 1);
+        c.value = h; c.font = { bold: true, color: { argb: "FFFFFFFF" } }; c.fill = fill(NAVY); c.border = border;
+        c.alignment = { horizontal: i === 0 || i > 3 ? "center" : "left" };
+      });
+      let r = 14;
+      P.blocks.forEach((b, i) => {
+        const row = ws.getRow(r++);
+        [i + 1, fmtFull(b.start) + " " + DOW_LONG[b.start.getDay()], fmtFull(b.end) + " " + DOW_LONG[b.end.getDay()],
+          fmtFull(b.ret) + " " + DOW_LONG[b.ret.getDay()], b.weekdays, b.sats, b.days].forEach((v, j) => {
+          const c = row.getCell(j + 1); c.value = v; c.border = border;
+          c.alignment = { horizontal: j === 0 || j > 3 ? "center" : "left" };
+        });
+      });
+      const tot = ws.getRow(r);
+      tot.getCell(1).value = "Toplam"; ws.mergeCells(`A${r}:D${r}`);
+      [[5, P.weekdays], [6, P.sats], [7, P.used]].forEach(([c, v]) => { tot.getCell(c).value = v; tot.getCell(c).alignment = { horizontal: "center" }; });
+      for (let c = 1; c <= 7; c++) { tot.getCell(c).font = { bold: true }; tot.getCell(c).fill = fill("FFF3F6FB"); tot.getCell(c).border = border; }
+
+      r += 2;
+      ws.getCell(`A${r}`).value = "Cumartesi kuralı: " + (els.satRule.checked ? "uygulandı (işe dönüş Cumartesi seçilemediği için)" : "uygulanmadı");
+      ws.getCell(`A${r}`).font = { size: 9, color: { argb: "FF666666" } };
+      r += 3;
+      [["A", "Çalışan"], ["C", "Birim Yöneticisi"], ["E", "İnsan Kaynakları"]].forEach(([c, t]) => {
+        const cell = ws.getCell(`${c}${r}`); cell.value = t + "  (Tarih / İmza)";
+        cell.border = { top: { style: "thin", color: { argb: "FF333333" } } }; cell.font = { size: 9 };
+      });
+
+      // Sheet 2: calendar grid
+      const cs = wb.addWorksheet("Takvim " + P.year, { pageSetup: { paperSize: 9, orientation: "landscape", fitToPage: true, fitToWidth: 1 } });
+      cs.columns = [{ width: 11 }, ...Array.from({ length: 31 }, () => ({ width: 4.2 }))];
+      const ch = cs.getRow(1);
+      ch.getCell(1).value = "Ay";
+      for (let dd = 1; dd <= 31; dd++) ch.getCell(dd + 1).value = dd;
+      for (let c = 1; c <= 32; c++) { const x = ch.getCell(c); x.font = { bold: true, color: { argb: "FFFFFFFF" } }; x.fill = fill(NAVY); x.alignment = { horizontal: "center" }; x.border = border; }
+      const COLORS = { lv: [NAVY, "FFFFFFFF"], sc: ["FF7F9BD1", "FFFFFFFF"], rt: ["FFF6C9D0", "FFA30D25"], we: ["FFECEFF4", "FF888888"] };
+      for (let m = 0; m < 12; m++) {
+        const row = cs.getRow(m + 2);
+        row.getCell(1).value = MONTHS[m]; row.getCell(1).font = { bold: true }; row.getCell(1).border = border;
+        for (let dd = 1; dd <= 31; dd++) {
+          const d = new Date(year, m, dd);
+          if (d.getMonth() !== m) continue;
+          const s = P.status(d), c = row.getCell(dd + 1);
+          c.value = CODE[s] || DOW1[d.getDay()];
+          c.alignment = { horizontal: "center" }; c.border = border; c.font = { size: 9 };
+          if (COLORS[s]) { c.fill = fill(COLORS[s][0]); c.font = { size: 9, bold: s !== "we", color: { argb: COLORS[s][1] } }; }
+          if (s === "rt") c.note = hol.get(key(d)).de;
+        }
+      }
+      const lg = [["İ", "İzin günü", "lv"], ["C", "İzinden düşen Cumartesi", "sc"], ["RT", "Resmi tatil", "rt"], ["", "Hafta sonu", "we"]];
+      lg.forEach(([code, label, s], i) => {
+        const row = cs.getRow(16 + i);
+        row.getCell(2).value = code; row.getCell(2).fill = fill(COLORS[s][0]); row.getCell(2).font = { bold: true, color: { argb: COLORS[s][1] } };
+        row.getCell(2).alignment = { horizontal: "center" };
+        row.getCell(3).value = label;
+      });
+
+      // Sheet 3: one row per charged day (for HR systems)
+      const ds = wb.addWorksheet("Gün listesi");
+      ds.columns = [{ header: "Tarih", width: 13 }, { header: "Gün", width: 12 }, { header: "Tür", width: 26 }];
+      ds.getRow(1).eachCell(c => { c.font = { bold: true, color: { argb: "FFFFFFFF" } }; c.fill = fill(NAVY); });
+      const sats = chargedSaturdays(leave);
+      [...leave, ...sats].sort().forEach(k => {
+        const d = parseKey(k);
+        ds.addRow([fmtFull(d), DOW_LONG[d.getDay()], sats.has(k) ? "Cumartesi (otomatik düşen)" : "Yıllık izin"]);
+      });
+      // Sheet 4: holidays
+      const hs = wb.addWorksheet("Resmi tatiller");
+      hs.columns = [{ header: "Tarih", width: 13 }, { header: "Gün", width: 12 }, { header: "Tatil", width: 28 }, { header: "Türkçe", width: 24 }];
+      hs.getRow(1).eachCell(c => { c.font = { bold: true, color: { argb: "FFFFFFFF" } }; c.fill = fill(NAVY); });
+      [...hol.values()].sort((a, b) => a.date - b.date).forEach(h => hs.addRow([fmtFull(h.date), DOW_LONG[h.date.getDay()], h.de, h.tr]));
+
+      const buf = await wb.xlsx.writeBuffer();
+      const blob = new Blob([buf], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+      const a = document.createElement("a");
+      const who = P.person.name ? "_" + P.person.name.replace(/[^\p{L}\p{N}]+/gu, "_") : "";
+      a.href = URL.createObjectURL(blob);
+      a.download = "Izin_Plani_" + P.year + who + ".xlsx";
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+      toast("Excel dosyası indirildi.");
+    } catch (e) {
+      toast("Excel hazırlanamadı. İnternet bağlantını kontrol edip tekrar dene.");
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  // ---------- document info dialog (shared by Print / Excel) ----------
+  els.fName = document.getElementById("fName");
+  els.fDept = document.getElementById("fDept");
+  els.fNo = document.getElementById("fNo");
+  const person = store.get("izin.person", {});
+  els.fName.value = person.name || ""; els.fDept.value = person.dept || ""; els.fNo.value = person.no || "";
+  let docAction = null;
+  function openDoc(action) {
+    docAction = action;
+    document.getElementById("dGo").textContent = action === "print" ? "Print / PDF olarak kaydet" : "Excel İndir";
+    docModal.classList.add("show");
+    setTimeout(() => els.fName.focus(), 50);
+  }
+  document.getElementById("dGo").addEventListener("click", () => {
+    store.set("izin.person", { name: els.fName.value.trim(), dept: els.fDept.value.trim(), no: els.fNo.value.trim() });
+    closeModal();
+    if (docAction === "print") { buildPrint(); setTimeout(() => window.print(), 50); }
+    else downloadExcel();
+  });
+  docModal.querySelectorAll("input").forEach(i => i.addEventListener("keydown", e => { if (e.key === "Enter") document.getElementById("dGo").click(); }));
+  document.getElementById("btnPrint").addEventListener("click", () => openDoc("print"));
+  document.getElementById("btnExcel").addEventListener("click", () => openDoc("excel"));
 
   // ---------- settings ----------
   els.satRule.addEventListener("change", () => { store.set("izin.satRule", els.satRule.checked); refresh(); });
   els.twoWeeks.addEventListener("change", () => { store.set("izin.twoWeeks", els.twoWeeks.checked); refresh(); });
+  els.oneLong.addEventListener("change", () => { store.set("izin.oneLong", els.oneLong.checked); refresh(); });
   els.allowance.addEventListener("input", () => { store.set("izin.allowance", els.allowance.value); refresh(); });
   els.year.addEventListener("change", () => { year = +els.year.value; loadYear(); });
   document.getElementById("clear").addEventListener("click", () => {
-    if (!leave.size || confirm(year + " yılındaki tüm izinler silinsin mi?")) { leave.clear(); save(); setResult(""); refresh(); }
+    if (!leave.size || confirm(year + " yılındaki tüm izinler silinsin mi?")) { leave.clear(); save(); refresh(); }
   });
 
   // ---------- CL rozeti (Tahmin Ligi'ndeki ile aynı kaynak, olmazsa SVG) ----------
