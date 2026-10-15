@@ -1,0 +1,813 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>İzin planlayıcı - Niedersachsen</title>
+<meta name="description" content="Niedersachsen resmi tatillerine göre yıllık izin planlayıcı ve izin optimizasyonu.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%85%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #00205b;
+    --navy-2: #0b3a8a;
+    --navy-soft: #e8eef8;
+    --bg: #f5f7fb;
+    --card: #ffffff;
+    --text: #14213d;
+    --muted: #6b7591;
+    --line: #e2e7f0;
+    --holiday: #c8102e;
+    --holiday-soft: #fdecef;
+    --sat-charge: #4a6fb5;
+    --radius: 14px;
+    /* Şampiyonlar Ligi Tahmin paleti */
+    --cl-bg: #060a1f;
+    --cl-blue: #4f8ff7;
+    --cl-blue-2: #bcd4ff;
+    --cl-ink: #eef2ff;
+    --cl-muted: #8b9ccb;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 15px;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: inherit; }
+
+  /* ---------- Top banner (SprachSnack, ceude/CL ile aynı) ---------- */
+  .adbanner {
+    display: flex; align-items: center; gap: 12px;
+    background: linear-gradient(90deg, #0b1234, #0e1740, #0b1234);
+    border-bottom: 1px solid rgba(79,143,247,.18);
+    padding: 9px max(16px, calc((100vw - 1100px) / 2)); text-decoration: none; color: var(--cl-ink);
+    position: relative; overflow: hidden; transition: background .2s;
+  }
+  .adbanner:hover { background: linear-gradient(90deg, #0d1338, #122058, #0d1338); }
+  .adbanner img { width: 36px; height: 36px; border-radius: 10px; border: 1px solid rgba(79,143,247,.25); flex: 0 0 auto; object-fit: cover; }
+  .adbanner .adt { display: flex; flex-direction: column; flex: 1; min-width: 0; gap: 1px; }
+  .adbanner .adspon { font-size: 11px; letter-spacing: 1.5px; font-weight: 800; color: var(--cl-blue); text-transform: uppercase; opacity: .75; }
+  .adbanner .adt b { font-size: 13px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--cl-ink); min-width: 0; }
+  .adbanner .addesc { font-size: 11px; color: var(--cl-muted); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+  .adbanner .adcta {
+    flex: 0 0 auto; background: linear-gradient(135deg, #1a2a63, #101a44); border: 1px solid rgba(79,143,247,.35);
+    color: var(--cl-blue-2); font-size: 11px; font-weight: 800; padding: 6px 12px; border-radius: 10px; white-space: nowrap; letter-spacing: .3px;
+  }
+  .adbanner:hover .adcta { background: linear-gradient(135deg, #22337a, #182456); border-color: rgba(79,143,247,.6); }
+
+  /* ---------- Layout ---------- */
+  .shell {
+    display: grid;
+    grid-template-columns: 160px minmax(0, 1fr) 160px;
+    gap: 24px;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 24px 16px 48px;
+  }
+  main { min-width: 0; }
+
+  /* ---------- Side banners (Şampiyonlar Ligi Tahmin) ---------- */
+  .side-ad {
+    position: sticky; top: 24px; align-self: start;
+    display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 14px;
+    height: 600px; padding: 20px 14px; border-radius: 16px;
+    background:
+      radial-gradient(420px 300px at 80% -10%, rgba(79,143,247,.28), transparent 60%),
+      radial-gradient(300px 260px at -20% 40%, rgba(150,110,255,.22), transparent 55%),
+      var(--cl-bg);
+    border: 1px solid rgba(79,143,247,.25);
+    color: var(--cl-ink); text-decoration: none; text-align: center;
+    box-shadow: 0 16px 48px -12px rgba(6,10,31,.55);
+    overflow: hidden; transition: transform .15s ease, border-color .15s;
+  }
+  .side-ad:hover { transform: translateY(-2px); border-color: rgba(79,143,247,.6); }
+  .side-ad .adspon { font-size: 10px; letter-spacing: 1.5px; font-weight: 800; color: var(--cl-blue); opacity: .75; }
+  .cl-logo { width: 84px; height: 84px; display: block; object-fit: contain; filter: drop-shadow(0 2px 10px rgba(79,143,247,.55)); }
+  .side-ad h3 { margin: 0; font-family: Anton, Impact, sans-serif; font-weight: 400; font-size: 26px; line-height: 1.05; letter-spacing: .5px; text-transform: uppercase; }
+  .side-ad h3 .y { color: var(--cl-blue); }
+  .side-ad .sub { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--cl-muted); font-weight: 700; margin-top: 4px; }
+  .side-ad p { margin: 0; font-size: 13px; color: var(--cl-muted); font-weight: 500; }
+  .side-ad .season { font-size: 12px; font-weight: 700; color: var(--cl-blue-2); border: 1px solid rgba(79,143,247,.3); border-radius: 999px; padding: 3px 10px; }
+  .side-ad .cta {
+    background: linear-gradient(135deg, #2b56c9, #4f8ff7); color: #fff; font-weight: 800; padding: 10px 16px; border-radius: 12px; font-size: 13px;
+    box-shadow: 0 6px 20px -6px rgba(79,143,247,.7);
+  }
+  .inline-ad { display: none; }
+
+  /* ---------- Header ---------- */
+  header.page-head { margin-bottom: 18px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand .logo {
+    width: 42px; height: 42px; border-radius: 11px; background: var(--navy);
+    display: grid; place-items: center; color: #fff; flex: none;
+  }
+  h1 { margin: 0; font-size: 26px; letter-spacing: -.01em; color: var(--navy); }
+  .back { font-size: 13px; color: var(--muted); text-decoration: none; }
+  .back:hover { color: var(--navy); }
+
+  /* ---------- Settings bar ---------- */
+  .settings {
+    display: flex; flex-wrap: wrap; gap: 14px 28px; align-items: center;
+    background: var(--navy); color: #fff; border-radius: var(--radius);
+    padding: 18px 20px; margin-bottom: 18px;
+  }
+  .setting { display: flex; align-items: center; gap: 10px; }
+  .setting label { font-size: 14px; }
+  .setting small { display: block; font-size: 12px; opacity: .7; }
+  .switch { position: relative; width: 44px; height: 24px; flex: none; }
+  .switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+  .switch span {
+    position: absolute; inset: 0; border-radius: 999px; background: rgba(255,255,255,.25); cursor: pointer; transition: background .15s;
+  }
+  .switch span::after {
+    content: ""; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: #fff; transition: transform .15s;
+  }
+  .switch input:checked + span { background: #3fa0ff; }
+  .switch input:checked + span::after { transform: translateX(20px); }
+  .switch input:focus-visible + span { outline: 2px solid #fff; outline-offset: 2px; }
+  .num, .sel {
+    font: inherit; font-weight: 600; color: var(--navy); background: #fff; border: 0; border-radius: 8px;
+    padding: 6px 8px; width: 70px; text-align: center;
+  }
+  .sel { width: auto; padding-right: 4px; }
+  .btn-ghost {
+    font: inherit; font-size: 13px; color: #fff; background: transparent;
+    border: 1px solid rgba(255,255,255,.4); border-radius: 8px; padding: 6px 12px; cursor: pointer;
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,.1); }
+  .settings .actions { flex-basis: 100%; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; border-top: 1px solid rgba(255,255,255,.15); padding-top: 14px; }
+  .btn-magic {
+    font: inherit; font-weight: 800; font-size: 16px; color: var(--navy); background: #fff; border: 0; border-radius: 12px;
+    padding: 12px 20px; cursor: pointer; display: inline-flex; align-items: center; gap: 10px;
+    box-shadow: 0 6px 20px -6px rgba(0,0,0,.45); transition: transform .12s, box-shadow .12s;
+  }
+  .btn-magic:hover { transform: translateY(-1px); box-shadow: 0 10px 24px -8px rgba(0,0,0,.5); }
+  .actions .btn-ghost { margin-left: auto; }
+
+  /* ---------- Summary ---------- */
+  .summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 12px; }
+  .stat { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+  .stat .k { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+  .stat .v { font-size: 28px; font-weight: 700; color: var(--navy); line-height: 1.2; font-variant-numeric: tabular-nums; }
+  .stat .s { font-size: 12px; color: var(--muted); }
+  .stat.remaining { background: var(--navy); border-color: var(--navy); }
+  .stat.remaining .k, .stat.remaining .s { color: rgba(255,255,255,.7); }
+  .stat.remaining .v { color: #fff; }
+  .stat.remaining.over { background: var(--holiday); border-color: var(--holiday); }
+
+  .notice { border-radius: 10px; padding: 10px 14px; font-size: 14px; margin-bottom: 12px; display: none; }
+  .notice.show { display: block; }
+  .notice.warn { background: #fff6e0; color: #7a5400; border: 1px solid #f3dc9b; }
+  .notice.ok { background: #e9f7ef; color: #17643a; border: 1px solid #bfe5cd; }
+
+  /* ---------- Legend ---------- */
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 13px; color: var(--muted); margin: 6px 0 12px; align-items: center; }
+  .legend .sw { display: inline-block; width: 14px; height: 14px; border-radius: 4px; vertical-align: -2px; margin-right: 6px; }
+  .hint { font-size: 13px; color: var(--muted); margin: 0 0 14px; }
+
+  /* ---------- Calendar ---------- */
+  .months { display: grid; grid-template-columns: repeat(auto-fill, minmax(232px, 1fr)); gap: 14px; user-select: none; -webkit-user-select: none; }
+  .month { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 12px 10px; }
+  .month h2 { margin: 0 0 8px; font-size: 14px; font-weight: 600; color: var(--navy); display: flex; justify-content: space-between; }
+  .month h2 .cnt { font-weight: 500; color: var(--muted); font-size: 12px; }
+  .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+  .dow { font-size: 11px; color: var(--muted); text-align: center; padding-bottom: 2px; }
+  .d {
+    aspect-ratio: 1; display: grid; place-items: center; font-size: 13px; border-radius: 7px;
+    font-variant-numeric: tabular-nums; position: relative;
+  }
+  .d.work { cursor: pointer; background: #f3f6fb; }
+  .d.work:hover { background: var(--navy-soft); box-shadow: inset 0 0 0 1.5px var(--navy-2); }
+  .d.sat { color: var(--text); background: #fafbfd; box-shadow: inset 0 0 0 1px var(--line); }
+  .d.sun { color: #b3bacb; }
+  .d.hol { background: var(--holiday-soft); color: var(--holiday); font-weight: 600; cursor: help; }
+  .d.leave { background: var(--navy); color: #fff; font-weight: 600; }
+  .d.leave:hover { background: var(--navy-2); }
+  .d.satcharged {
+    color: #fff; font-weight: 600; box-shadow: none;
+    background: repeating-linear-gradient(135deg, var(--sat-charge) 0 5px, #6d8ccc 5px 10px);
+  }
+  .d.today::after { content: ""; position: absolute; bottom: 3px; width: 4px; height: 4px; border-radius: 50%; background: currentColor; opacity: .8; }
+  .d.flash { animation: flash .5s ease 2; }
+  @keyframes flash { 50% { background: var(--holiday); color: #fff; } }
+
+  /* ---------- Lower panels ---------- */
+  .panels { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 14px; margin-top: 18px; }
+  .panel { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; }
+  .panel h2 { margin: 0 0 10px; font-size: 15px; color: var(--navy); }
+  .list { list-style: none; margin: 0; padding: 0; }
+  .list li { display: flex; justify-content: space-between; gap: 10px; padding: 8px 0; border-top: 1px solid var(--line); font-size: 14px; }
+  .list li:first-child { border-top: 0; }
+  .list .muted { color: var(--muted); font-size: 13px; }
+  .pill { background: var(--navy-soft); color: var(--navy); border-radius: 999px; padding: 1px 9px; font-weight: 600; font-size: 13px; white-space: nowrap; align-self: center; }
+  .pill.red { background: var(--holiday-soft); color: var(--holiday); }
+  .tag2w { display: inline-block; margin-left: 6px; font-size: 11px; font-weight: 700; color: #fff; background: var(--navy); border-radius: 6px; padding: 0 6px; vertical-align: 1px; }
+  .empty { color: var(--muted); font-size: 14px; margin: 0; }
+  .rules { font-size: 13px; color: var(--muted); margin: 10px 0 0; padding-left: 18px; }
+  .rules li { margin: 3px 0; }
+
+  footer { margin-top: 28px; font-size: 12px; color: var(--muted); text-align: center; }
+
+  /* ---------- Modal ---------- */
+  .modal { position: fixed; inset: 0; background: rgba(0, 20, 50, .55); display: none; align-items: center; justify-content: center; padding: 16px; z-index: 50; }
+  .modal.show { display: flex; }
+  .dialog { background: #fff; border-radius: 18px; padding: 22px; width: min(520px, 100%); box-shadow: 0 24px 60px -12px rgba(0,0,0,.45); position: relative; }
+  .dialog h2 { margin: 0 0 4px; font-size: 19px; color: var(--navy); padding-right: 30px; }
+  .dialog p { margin: 0 0 16px; color: var(--muted); font-size: 14px; }
+  .dialog .x { position: absolute; top: 14px; right: 14px; border: 0; background: var(--navy-soft); color: var(--navy); width: 32px; height: 32px; border-radius: 50%; font-size: 18px; cursor: pointer; }
+  .month-btns { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+  .month-btns button {
+    font: inherit; font-weight: 600; font-size: 14px; padding: 11px 4px; border-radius: 10px; cursor: pointer;
+    border: 1px solid var(--line); background: #f6f8fc; color: var(--navy);
+  }
+  .month-btns button:hover { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .btn-auto {
+    margin-top: 12px; width: 100%; font: inherit; font-weight: 800; font-size: 15px; padding: 13px; border-radius: 12px; cursor: pointer;
+    border: 0; background: var(--navy); color: #fff;
+  }
+  .btn-auto:hover { background: var(--navy-2); }
+
+  .toast {
+    position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px); opacity: 0; pointer-events: none;
+    background: #1b2440; color: #fff; padding: 10px 16px; border-radius: 10px; font-size: 14px; transition: .2s; z-index: 60; max-width: calc(100% - 32px);
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 1180px) {
+    .shell { grid-template-columns: minmax(0, 1fr); }
+    .side-ad { display: none; }
+    .inline-ad {
+      display: flex; align-items: center; gap: 14px; margin-top: 18px;
+      padding: 14px 18px; border-radius: 16px; text-decoration: none; color: var(--cl-ink);
+      background: radial-gradient(500px 200px at 90% -20%, rgba(79,143,247,.3), transparent 60%), var(--cl-bg);
+      border: 1px solid rgba(79,143,247,.25);
+    }
+    .inline-ad .cl-logo { width: 48px; height: 48px; flex: none; }
+    .inline-ad .txt { flex: 1; min-width: 0; }
+    .inline-ad b { font-family: Anton, Impact, sans-serif; font-weight: 400; font-size: 18px; letter-spacing: .5px; text-transform: uppercase; }
+    .inline-ad .cta { background: linear-gradient(135deg, #2b56c9, #4f8ff7); color: #fff; font-weight: 800; padding: 8px 14px; border-radius: 10px; font-size: 13px; white-space: nowrap; }
+  }
+  @media (max-width: 760px) {
+    .summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .panels { grid-template-columns: minmax(0, 1fr); }
+    .actions .btn-ghost { margin-left: 0; }
+    .btn-magic { width: 100%; justify-content: center; }
+    h1 { font-size: 21px; }
+    .month-btns { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+</style>
+</head>
+<body>
+
+<!-- AD BANNER (en üst) -->
+<a class="adbanner" href="https://apps.apple.com/app/id6755360072" target="_blank" rel="noopener">
+  <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/42/b4/36/42b43605-401c-4aa2-b956-2b888a0e8235/Placeholder.mill/400x400bb-75.webp" alt="SprachSnack" onerror="this.style.display='none'">
+  <div class="adt">
+    <span class="adspon">REKLAM</span>
+    <b>SprachSnack: Deutsche Wörter</b>
+    <span class="addesc">3500+ TELC kelimesiyle Almanca öğren · Ücretsiz</span>
+  </div>
+  <span class="adcta">App Store ↗</span>
+</a>
+
+<div class="shell">
+
+  <a class="side-ad" href="https://ceude.github.io/CL/" target="_blank" rel="noopener" aria-label="Şampiyonlar Ligi Tahmin Ligi">
+    <span class="adspon">REKLAM</span>
+    <span class="cl-badge"></span>
+    <div><h3>Şampiyonlar <span class="y">Ligi</span></h3><div class="sub">Tahmin Ligi</div></div>
+    <span class="season">2026-27 Sezonu</span>
+    <p>Maç skorlarını tahmin et, arkadaşlarınla yarış, lider tablosunda yüksel.</p>
+    <span class="cta">Hemen oyna ↗</span>
+  </a>
+
+  <main>
+    <header class="page-head">
+      <a class="back" href="https://ceude.github.io/">← ceude · projeler</a>
+      <div class="brand" style="margin-top:6px">
+        <div class="logo" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 15l2 2 4-4"/></svg>
+        </div>
+        <h1>İzin planlayıcı - Niedersachsen</h1>
+      </div>
+    </header>
+
+    <section class="settings" aria-label="Ayarlar">
+      <div class="setting">
+        <label class="switch"><input type="checkbox" id="satRule" checked><span></span></label>
+        <label for="satRule">Cuma izin alındıysa Cumartesi izinden düşsün mü?
+          <small>İşe dönüş Cumartesi seçilemediği için</small></label>
+      </div>
+      <div class="setting">
+        <label class="switch"><input type="checkbox" id="twoWeeks" checked><span></span></label>
+        <label for="twoWeeks">2 haftalık izin kullanımı zorunlu mu?
+          <small>6 + 6 = 12 gün düşer (arada resmi tatil yoksa)</small></label>
+      </div>
+      <div class="setting">
+        <label for="allowance">Yıllık izin hakkı</label>
+        <input class="num" type="number" id="allowance" min="0" max="60" step="1" value="24">
+      </div>
+      <div class="setting">
+        <label for="year">Yıl</label>
+        <select class="sel" id="year"></select>
+      </div>
+      <div class="actions">
+        <button class="btn-magic" id="optimize" type="button">✨ Benim için en verimli takvimi hazırla!</button>
+        <button class="btn-ghost" id="clear" type="button">Bu yılı temizle</button>
+      </div>
+    </section>
+
+    <section class="summary" aria-live="polite">
+      <div class="stat"><div class="k">İzin hakkı</div><div class="v" id="sAllow">24</div><div class="s">gün</div></div>
+      <div class="stat"><div class="k">Seçilen hafta içi</div><div class="v" id="sWeek">0</div><div class="s">Pzt–Cum izin günü</div></div>
+      <div class="stat"><div class="k">Düşen Cumartesi</div><div class="v" id="sSat">0</div><div class="s">otomatik eklenen</div></div>
+      <div class="stat remaining" id="remBox"><div class="k">Kalan izin</div><div class="v" id="sRem">24</div><div class="s" id="sUsed">0 gün kullanıldı</div></div>
+    </section>
+    <div class="notice ok" id="resultNote"></div>
+    <div class="notice warn" id="twoWeekNote">Zorunlu 2 haftalık izin henüz planlanmadı.</div>
+
+    <div class="legend">
+      <span><i class="sw" style="background:var(--navy)"></i>İzin günü</span>
+      <span><i class="sw" style="background:repeating-linear-gradient(135deg,var(--sat-charge) 0 4px,#6d8ccc 4px 8px)"></i>İzinden düşen Cumartesi</span>
+      <span><i class="sw" style="background:var(--holiday-soft);box-shadow:inset 0 0 0 1px var(--holiday)"></i>Resmi tatil (Niedersachsen)</span>
+      <span><i class="sw" style="background:#f3f6fb;box-shadow:inset 0 0 0 1px var(--line)"></i>İş günü</span>
+    </div>
+    <p class="hint">Bir güne tıklayarak izin ekle / kaldır. Basılı tutup sürükleyerek birden fazla gün seçebilirsin. Resmi tatiller ve hafta sonları seçilemez, tek seferde 2 haftadan uzun izin alınamaz.</p>
+
+    <section class="months" id="months"></section>
+
+    <section class="panels">
+      <div class="panel">
+        <h2>İzin blokları</h2>
+        <ul class="list" id="blocks"></ul>
+        <ul class="rules">
+          <li>Cumartesi resmi tatilse, Cuma izni <b>1 gün</b> düşer.</li>
+          <li>Cumartesi normal günse, Cuma izni <b>2 gün</b> düşer (Cuma + Cumartesi).</li>
+          <li>Perşembe–Cuma tatil, Çarşamba izinliysen yine <b>2 gün</b> düşer: işe dönüş Pazartesi seçildiği için Cumartesi de sayılır.</li>
+          <li>Tek bir izin en fazla <b>2 hafta</b> sürebilir (izin başlangıcından işe dönüşe 14 gün).</li>
+          <li>Optimizasyon, izinden düşen gün başına en uzun kesintisiz tatili verecek şekilde köprü günleri seçer.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h2>Resmi tatiller <span id="holYear" style="font-weight:500;color:var(--muted)"></span></h2>
+        <ul class="list" id="holidays"></ul>
+      </div>
+    </section>
+
+    <a class="inline-ad" href="https://ceude.github.io/CL/" target="_blank" rel="noopener">
+      <span class="cl-badge"></span>
+      <span class="txt"><span class="adspon" style="font-size:10px;letter-spacing:1.5px;font-weight:800;color:var(--cl-blue)">REKLAM</span><br><b>Şampiyonlar Ligi Tahmin</b><br><span style="font-size:13px;color:var(--cl-muted)">Skorları tahmin et, arkadaşlarınla yarış.</span></span>
+      <span class="cta">Oyna ↗</span>
+    </a>
+
+    <footer>Veriler sadece bu tarayıcıda saklanır · <a href="https://ceude.github.io/">ceude.github.io</a></footer>
+  </main>
+
+  <a class="side-ad" href="https://ceude.github.io/CL/" target="_blank" rel="noopener" aria-label="Şampiyonlar Ligi Tahmin Ligi">
+    <span class="adspon">REKLAM</span>
+    <span class="cl-badge"></span>
+    <div><h3>Maç günü <span class="y">geldi!</span></h3><div class="sub">Tahmin Ligi</div></div>
+    <span class="season">Ücretsiz</span>
+    <p>Her maça skor tahmini yap, puan topla, sıralamada zirveye oyna.</p>
+    <span class="cta">Tahmin yap ↗</span>
+  </a>
+
+</div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="dialog">
+    <button class="x" id="mClose" aria-label="Kapat">×</button>
+    <h2 id="mTitle">2 haftalık izni hangi ayda planlıyorsun?</h2>
+    <p>Seçtiğin ayda en az izin düşen 2 haftayı bulur, kalan günleri köprü günlerine dağıtırım.</p>
+    <div class="month-btns" id="mMonths"></div>
+    <button class="btn-auto" id="mAuto">2 haftalık izni de sen seç</button>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  const MONTHS = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
+  const DOW = ["Pzt","Sal","Çar","Per","Cum","Cmt","Paz"];
+  const DOW_LONG = ["Pazar","Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi"];
+  const MAX_SPAN = 14;     // izin başlangıcından işe dönüşe en fazla 14 gün
+  const DAY = 86400000;
+
+  // ---------- storage (best effort) ----------
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  };
+
+  // ---------- dates ----------
+  const pad = n => String(n).padStart(2, "0");
+  const key = d => d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+  const addDays = (d, n) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+  const diffDays = (a, b) => Math.round((b - a) / DAY);
+  const fmt = d => pad(d.getDate()) + "." + pad(d.getMonth() + 1);
+  const parseKey = k => new Date(+k.slice(0, 4), +k.slice(5, 7) - 1, +k.slice(8, 10));
+
+  function easterSunday(y) { // Anonymous Gregorian algorithm
+    const a = y % 19, b = Math.floor(y / 100), c = y % 100, d = Math.floor(b / 4), e = b % 4;
+    const f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3);
+    const h = (19 * a + b - d - g + 15) % 30, i = Math.floor(c / 4), k = c % 4;
+    const l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451);
+    const month = Math.floor((h + l - 7 * m + 114) / 31), day = ((h + l - 7 * m + 114) % 31) + 1;
+    return new Date(y, month - 1, day);
+  }
+
+  // Gesetzliche Feiertage in Niedersachsen
+  function holidays(y) {
+    const e = easterSunday(y);
+    const list = [
+      [new Date(y, 0, 1), "Yılbaşı", "Neujahr"],
+      [addDays(e, -2), "Kutsal Cuma", "Karfreitag"],
+      [addDays(e, 1), "Paskalya Pazartesi", "Ostermontag"],
+      [new Date(y, 4, 1), "İşçi Bayramı", "Tag der Arbeit"],
+      [addDays(e, 39), "Göğe Yükseliş", "Christi Himmelfahrt"],
+      [addDays(e, 50), "Pentekost Pazartesi", "Pfingstmontag"],
+      [new Date(y, 9, 3), "Alman Birliği Günü", "Tag der Deutschen Einheit"],
+      [new Date(y, 9, 31), "Reformasyon Günü", "Reformationstag"],
+      [new Date(y, 11, 25), "Noel 1. gün", "1. Weihnachtstag"],
+      [new Date(y, 11, 26), "Noel 2. gün", "2. Weihnachtstag"]
+    ];
+    const map = new Map();
+    list.forEach(([d, tr, de]) => map.set(key(d), { date: d, tr, de }));
+    return map;
+  }
+
+  // ---------- state ----------
+  const now = new Date();
+  const els = {
+    satRule: document.getElementById("satRule"),
+    twoWeeks: document.getElementById("twoWeeks"),
+    allowance: document.getElementById("allowance"),
+    year: document.getElementById("year"),
+    months: document.getElementById("months")
+  };
+  for (let y = 2026; y <= 2029; y++) {
+    const o = document.createElement("option"); o.value = y; o.textContent = y; els.year.appendChild(o);
+  }
+
+  let year = 2027;
+  els.year.value = year;
+  els.satRule.checked = store.get("izin.satRule", true);
+  els.twoWeeks.checked = store.get("izin.twoWeeks", true);
+  els.allowance.value = store.get("izin.allowance", 24);
+
+  let hol, holAll, leave;
+
+  const isHol = d => holAll.has(key(d));
+  const isFree = d => d.getDay() === 0 || d.getDay() === 6 || isHol(d);   // işe gidilmeyen gün
+  const isWorkday = d => !isFree(d);
+
+  // A Saturday is charged when the last working weekday before it (skipping holidays) is a leave day,
+  // because the return-to-work date can't be a Saturday, so the employee returns on Monday.
+  function chargedSaturdays(set) {
+    const out = new Set();
+    if (!els.satRule.checked) return out;
+    for (let d = new Date(year, 0, 1); d.getFullYear() === year; d = addDays(d, 1)) {
+      if (d.getDay() !== 6 || isHol(d)) continue;
+      for (let back = 1; back <= 5; back++) {
+        const p = addDays(d, -back);
+        if (isHol(p)) continue;
+        if (set.has(key(p))) out.add(key(d));
+        break;
+      }
+    }
+    return out;
+  }
+
+  // Absence blocks: a run of leave days, bridged by weekends/holidays, ending at the return-to-work day.
+  function computeBlocks(set, sats) {
+    const blocks = [];
+    let cur = null;
+    for (let d = new Date(year, 0, 1); d.getFullYear() === year; d = addDays(d, 1)) {
+      const k = key(d);
+      if (set.has(k) || sats.has(k)) {
+        if (!cur) cur = { start: d, end: d, days: 0, sats: 0 };
+        cur.end = d; cur.days++; if (sats.has(k)) cur.sats++;
+      } else if (cur && isFree(d)) {
+        // weekend/holiday inside or right after a block: keep it open
+      } else if (cur) {
+        cur.ret = d; blocks.push(cur); cur = null;
+      }
+    }
+    if (cur) {
+      let r = addDays(cur.end, 1);
+      while (isFree(r)) r = addDays(r, 1);
+      cur.ret = r; blocks.push(cur);
+    }
+    blocks.forEach(b => { b.span = diffDays(b.start, b.ret); });
+    return blocks;
+  }
+
+  // ---------- render ----------
+  function renderCalendar() {
+    const frag = document.createDocumentFragment();
+    for (let m = 0; m < 12; m++) {
+      const box = document.createElement("div"); box.className = "month";
+      const h = document.createElement("h2");
+      h.innerHTML = MONTHS[m] + ' <span class="cnt" data-m="' + m + '"></span>';
+      box.appendChild(h);
+      const g = document.createElement("div"); g.className = "grid";
+      DOW.forEach(n => { const s = document.createElement("div"); s.className = "dow"; s.textContent = n; g.appendChild(s); });
+      const first = new Date(year, m, 1);
+      const offset = (first.getDay() + 6) % 7;
+      for (let i = 0; i < offset; i++) g.appendChild(document.createElement("div"));
+      for (let d = first; d.getMonth() === m; d = addDays(d, 1)) {
+        const c = document.createElement("div");
+        const k = key(d), w = d.getDay();
+        c.className = "d"; c.textContent = d.getDate(); c.dataset.k = k;
+        if (hol.has(k)) { c.classList.add("hol"); c.title = hol.get(k).tr + " · " + hol.get(k).de; }
+        else if (w === 0) c.classList.add("sun");
+        else if (w === 6) c.classList.add("sat");
+        else c.classList.add("work");
+        if (k === key(now)) c.classList.add("today");
+        g.appendChild(c);
+      }
+      box.appendChild(g);
+      frag.appendChild(box);
+    }
+    els.months.replaceChildren(frag);
+  }
+
+  function refresh() {
+    const sats = chargedSaturdays(leave);
+    els.months.querySelectorAll(".d[data-k]").forEach(c => {
+      const k = c.dataset.k;
+      c.classList.toggle("leave", leave.has(k));
+      c.classList.toggle("satcharged", sats.has(k));
+      if (sats.has(k)) c.title = "İzinden düşer: dönüş Pazartesi";
+      else if (c.classList.contains("sat")) c.title = "";
+    });
+
+    const perMonth = new Array(12).fill(0);
+    leave.forEach(k => perMonth[+k.slice(5, 7) - 1]++);
+    sats.forEach(k => perMonth[+k.slice(5, 7) - 1]++);
+    els.months.querySelectorAll(".cnt").forEach(s => {
+      const n = perMonth[+s.dataset.m];
+      s.textContent = n ? n + " gün" : "";
+    });
+
+    const allow = parseFloat(els.allowance.value) || 0;
+    const used = leave.size + sats.size;
+    const rem = allow - used;
+    document.getElementById("sAllow").textContent = allow;
+    document.getElementById("sWeek").textContent = leave.size;
+    document.getElementById("sSat").textContent = sats.size;
+    document.getElementById("sRem").textContent = rem;
+    document.getElementById("sUsed").textContent = used + " gün kullanıldı" + (rem < 0 ? " · hak aşıldı!" : "");
+    document.getElementById("remBox").classList.toggle("over", rem < 0);
+
+    const blocks = computeBlocks(leave, sats);
+    const hasTwoWeeks = blocks.some(b => b.span === MAX_SPAN);
+    document.getElementById("twoWeekNote").classList.toggle("show", els.twoWeeks.checked && !hasTwoWeeks);
+    renderBlocks(blocks);
+  }
+
+  function renderBlocks(blocks) {
+    const ul = document.getElementById("blocks");
+    ul.replaceChildren();
+    if (!blocks.length) {
+      const li = document.createElement("li");
+      li.innerHTML = '<p class="empty">Henüz izin seçilmedi.</p>';
+      ul.appendChild(li);
+      return;
+    }
+    blocks.forEach(b => {
+      const li = document.createElement("li");
+      const range = b.start.getTime() === b.end.getTime()
+        ? DOW_LONG[b.start.getDay()] + " " + fmt(b.start)
+        : DOW_LONG[b.start.getDay()] + " " + fmt(b.start) + " – " + DOW_LONG[b.end.getDay()] + " " + fmt(b.end);
+      // tatil süresi: öncesindeki hafta sonu / resmi tatiller dahil, işe dönüşten önceki güne kadar
+      let p = b.start; while (isFree(addDays(p, -1))) p = addDays(p, -1);
+      const off = diffDays(p, b.ret);
+      const ret = "İşe dönüş: " + DOW_LONG[b.ret.getDay()] + " " + fmt(b.ret) + " · " + off + " gün tatil";
+      const extra = b.sats ? " · " + b.sats + " Cumartesi dahil" : "";
+      li.innerHTML = '<span><b></b><br><span class="muted"></span></span><span class="pill"></span>';
+      li.querySelector("b").textContent = range;
+      if (b.span === MAX_SPAN) li.querySelector("b").insertAdjacentHTML("beforeend", '<span class="tag2w">2 hafta</span>');
+      li.querySelector(".muted").textContent = ret + extra;
+      li.querySelector(".pill").textContent = b.days + " gün";
+      ul.appendChild(li);
+    });
+  }
+
+  function renderHolidays() {
+    document.getElementById("holYear").textContent = year;
+    const ul = document.getElementById("holidays");
+    ul.replaceChildren();
+    [...hol.values()].sort((a, b) => a.date - b.date).forEach(h => {
+      const li = document.createElement("li");
+      const w = h.date.getDay();
+      li.innerHTML = '<span><b></b><br><span class="muted"></span></span><span class="pill red"></span>';
+      li.querySelector("b").textContent = h.tr;
+      li.querySelector(".muted").textContent = h.de;
+      li.querySelector(".pill").textContent = fmt(h.date) + " " + DOW_LONG[w].slice(0, 3);
+      if (w === 0 || w === 6) li.querySelector(".pill").style.opacity = ".55";
+      ul.appendChild(li);
+    });
+  }
+
+  function save() { store.set("izin.days." + year, [...leave]); }
+
+  function loadYear() {
+    hol = holidays(year);
+    holAll = new Map([...holidays(year - 1), ...hol, ...holidays(year + 1)]);
+    leave = new Set(store.get("izin.days." + year, []).filter(k => isWorkday(parseKey(k))));
+    setResult("");
+    renderCalendar(); renderHolidays(); refresh();
+  }
+
+  let toastTimer;
+  function toast(msg) {
+    const t = document.getElementById("toast");
+    t.textContent = msg; t.classList.add("show");
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove("show"), 2800);
+  }
+  function setResult(html) {
+    const n = document.getElementById("resultNote");
+    n.innerHTML = html; n.classList.toggle("show", !!html);
+  }
+
+  // ---------- interaction: click / drag to select ----------
+  const tooLong = set => computeBlocks(set, chargedSaturdays(set)).some(b => b.span > MAX_SPAN);
+  let dragMode = null; // "add" | "remove"
+  function apply(cell) {
+    if (!cell || !cell.classList.contains("work")) return;
+    const k = cell.dataset.k;
+    if (dragMode === "add") {
+      if (leave.has(k)) return;
+      leave.add(k);
+      if (tooLong(leave)) {
+        leave.delete(k);
+        cell.classList.remove("flash"); void cell.offsetWidth; cell.classList.add("flash");
+        toast("2 haftadan uzun izin alınamaz.");
+        return;
+      }
+    } else {
+      leave.delete(k);
+    }
+    setResult("");
+    refresh();
+  }
+  els.months.addEventListener("pointerdown", e => {
+    const cell = e.target.closest(".d.work");
+    if (!cell) return;
+    e.preventDefault();
+    dragMode = leave.has(cell.dataset.k) ? "remove" : "add";
+    apply(cell);
+  });
+  let lastCell = null;
+  document.addEventListener("pointermove", e => {
+    if (!dragMode) return;
+    const el = document.elementFromPoint(e.clientX, e.clientY);
+    const cell = el && el.closest(".d.work");
+    if (cell && cell !== lastCell) { lastCell = cell; apply(cell); }
+  });
+  const endDrag = () => { if (dragMode) { dragMode = null; lastCell = null; save(); } };
+  document.addEventListener("pointerup", endDrag);
+  document.addEventListener("pointercancel", endDrag);
+  els.months.style.touchAction = "pan-y";
+
+  // ---------- optimizer ----------
+  // Candidate block = every workday from W[i] to W[j] taken as leave. Its holiday period starts at the
+  // free days before W[i] and ends the day before return (first workday after W[j]).
+  // value = holiday length - 2, so long bridges around public holidays beat scattered single days.
+  // Weighted interval DP over workdays with a budget dimension and a "2-week block taken" flag.
+  function optimize(budget, mandMode) { // mandMode: null = no mandatory block, "any", or month 0-11
+    const W = [];
+    for (let d = new Date(year, 0, 1); d.getFullYear() === year; d = addDays(d, 1)) if (isWorkday(d)) W.push(d);
+    const n = W.length, satRule = els.satRule.checked;
+    const cands = Array.from({ length: n }, () => []);
+    for (let i = 0; i < n; i++) {
+      let pStart = W[i]; while (isFree(addDays(pStart, -1))) pStart = addDays(pStart, -1);
+      for (let j = i; j < n; j++) {
+        let r = addDays(W[j], 1); while (isFree(r)) r = addDays(r, 1);
+        const span = diffDays(W[i], r);
+        if (span > MAX_SPAN) break;
+        let sats = 0;
+        if (satRule) for (let d = addDays(W[i], 1); d < r; d = addDays(d, 1)) if (d.getDay() === 6 && !isHol(d) && d.getFullYear() === year) sats++;
+        const cost = (j - i + 1) + sats;
+        if (cost > budget) break;
+        const len = diffDays(pStart, r);
+        const mand = mandMode !== null && span === MAX_SPAN && (mandMode === "any" || W[i].getMonth() === mandMode);
+        cands[i].push({ i, j, cost, len, val: len - 2, mand });
+      }
+    }
+    const needF = mandMode === null ? 0 : 1;
+    const B = budget, S = (B + 1) * 2;
+    const idx = (p, b, f) => p * S + b * 2 + f;
+    const val = new Float64Array((n + 1) * S).fill(-Infinity);
+    const prev = new Int32Array((n + 1) * S).fill(-1);
+    const via = new Array((n + 1) * S);
+    val[idx(0, 0, 0)] = 0;
+    const relax = (to, v, from, c) => { if (v > val[to]) { val[to] = v; prev[to] = from; via[to] = c; } };
+    for (let p = 0; p < n; p++) {
+      for (let b = 0; b <= B; b++) for (let f = 0; f < 2; f++) {
+        const cur = idx(p, b, f), v = val[cur];
+        if (v === -Infinity) continue;
+        relax(idx(p + 1, b, f), v, cur, null);
+        for (const c of cands[p]) {
+          const nb = b + c.cost; if (nb > B) break;
+          const np = Math.min(n, c.j + 2); // en az bir iş günü arayla
+          relax(idx(np, nb, f), v + c.val, cur, c);
+          if (c.mand && f === 0) relax(idx(np, nb, 1), v + c.val + 1e-6, cur, c);
+        }
+      }
+    }
+    // en yüksek değer; eşitlikte daha çok gün kullanan
+    let best = -1, bestV = -Infinity;
+    for (let b = 0; b <= B; b++) {
+      const k = idx(n, b, needF), v = val[k] + b * 1e-3;
+      if (val[k] > -Infinity && v > bestV) { bestV = v; best = k; }
+    }
+    if (best < 0) return null;
+    const chosen = [];
+    for (let k = best; prev[k] >= 0; k = prev[k]) if (via[k]) chosen.push(via[k]);
+    const set = new Set();
+    chosen.forEach(c => { for (let t = c.i; t <= c.j; t++) set.add(key(W[t])); });
+    return set;
+  }
+
+  function runOptimize(mandMode) {
+    const budget = Math.floor(parseFloat(els.allowance.value) || 0);
+    const res = optimize(budget, mandMode);
+    closeModal();
+    if (!res) {
+      toast(mandMode === null ? "Bu izin hakkıyla plan yapılamadı." : "Bu ayda 2 haftalık izin için yeterli izin hakkı yok.");
+      return;
+    }
+    leave = res; save(); refresh();
+    const sats = chargedSaturdays(leave);
+    const blocks = computeBlocks(leave, sats);
+    let off = 0;
+    blocks.forEach(b => { let p = b.start; while (isFree(addDays(p, -1))) p = addDays(p, -1); off += diffDays(p, b.ret); });
+    const used = leave.size + sats.size;
+    setResult("✨ <b>" + used + " gün</b> izinle toplam <b>" + off + " gün</b> tatil, " + blocks.length + " ayrı izin." +
+      (budget - used > 0 ? " " + (budget - used) + " gün kaldı; istersen elle ekleyebilirsin." : ""));
+    document.querySelector(".summary").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  // ---------- modal ----------
+  const modal = document.getElementById("modal");
+  const mMonths = document.getElementById("mMonths");
+  MONTHS.forEach((m, i) => {
+    const b = document.createElement("button"); b.type = "button"; b.textContent = m;
+    b.addEventListener("click", () => runOptimize(i));
+    mMonths.appendChild(b);
+  });
+  function closeModal() { modal.classList.remove("show"); }
+  document.getElementById("mAuto").addEventListener("click", () => runOptimize("any"));
+  document.getElementById("mClose").addEventListener("click", closeModal);
+  modal.addEventListener("click", e => { if (e.target === modal) closeModal(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+
+  document.getElementById("optimize").addEventListener("click", () => {
+    if (leave.size && !confirm(year + " için mevcut izin seçimlerin silinip yeni plan hazırlansın mı?")) return;
+    if (els.twoWeeks.checked) modal.classList.add("show");
+    else runOptimize(null);
+  });
+
+  // ---------- settings ----------
+  els.satRule.addEventListener("change", () => { store.set("izin.satRule", els.satRule.checked); refresh(); });
+  els.twoWeeks.addEventListener("change", () => { store.set("izin.twoWeeks", els.twoWeeks.checked); refresh(); });
+  els.allowance.addEventListener("input", () => { store.set("izin.allowance", els.allowance.value); refresh(); });
+  els.year.addEventListener("change", () => { year = +els.year.value; loadYear(); });
+  document.getElementById("clear").addEventListener("click", () => {
+    if (!leave.size || confirm(year + " yılındaki tüm izinler silinsin mi?")) { leave.clear(); save(); setResult(""); refresh(); }
+  });
+
+  // ---------- CL rozeti (Tahmin Ligi'ndeki ile aynı kaynak, olmazsa SVG) ----------
+  const CL_SVG = '<svg viewBox="0 0 64 64" class="cl-logo" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><radialGradient id="clg" cx="50%" cy="38%" r="65%"><stop offset="0" stop-color="#eaf1ff"/><stop offset=".55" stop-color="#8fb6ff"/><stop offset="1" stop-color="#2b56c9"/></radialGradient></defs><circle cx="32" cy="32" r="29" fill="#0a1740" stroke="url(#clg)" stroke-width="2.5"/><g fill="url(#clg)"><path d="M32 9l1.7 3.6 3.9.5-2.9 2.7.8 3.9L32 15.9l-3.5 1.7.8-3.9-2.9-2.7 3.9-.5z"/><path d="M48 15l1.4 3 3.3.4-2.5 2.3.7 3.3-2.9-1.6-2.9 1.6.7-3.3-2.5-2.3 3.3-.4z" opacity=".9"/><path d="M55 31l1.2 2.6 2.9.3-2.2 2 .6 2.9-2.5-1.4-2.5 1.4.6-2.9-2.2-2 2.9-.3z" opacity=".8"/><path d="M16 15l1.4 3 3.3.4-2.5 2.3.7 3.3L13.5 26l-2.9 1.6.7-3.3L8.8 22l3.3-.4z" opacity=".9"/><path d="M9 31l1.2 2.6 2.9.3-2.2 2 .6 2.9L9 38.4 6.5 39.8l.6-2.9-2.2-2 2.9-.3z" opacity=".8"/><path d="M32 45l1.4 3 3.3.4-2.5 2.3.7 3.3L32 56l-2.9 1.6.7-3.3-2.5-2.3 3.3-.4z"/></g></svg>';
+  document.querySelectorAll(".cl-badge").forEach(s => { s.innerHTML = CL_SVG; });
+  fetch("https://www.thesportsdb.com/api/v1/json/123/lookupleague.php?id=4480")
+    .then(r => r.json())
+    .then(j => {
+      const url = j && j.leagues && j.leagues[0] && j.leagues[0].strBadge;
+      if (!url) return;
+      document.querySelectorAll(".cl-badge").forEach(s => {
+        const img = new Image(); img.className = "cl-logo"; img.alt = "Şampiyonlar Ligi";
+        img.onload = () => s.replaceChildren(img);
+        img.src = url + "/preview";
+      });
+    })
+    .catch(() => {});
+
+  loadYear();
+
+  window.__izin = { holidays, optimize, computeBlocks, chargedSaturdays, get leave() { return leave; } };
+})();
+</script>
+</body>
+</html>
